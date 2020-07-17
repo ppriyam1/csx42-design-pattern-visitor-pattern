@@ -1,4 +1,7 @@
 package arrayvisitors.visitors;
 
-public class Element {
+public interface Element{
+
+	public void accept(Visitor visitor);
+	
 }

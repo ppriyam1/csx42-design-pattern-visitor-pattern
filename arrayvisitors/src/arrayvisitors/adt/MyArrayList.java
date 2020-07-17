@@ -1,5 +1,13 @@
 package arrayvisitors.adt;
 
-public class MyArrayList{
+import arrayvisitors.visitors.Visitor;
+
+public class MyArrayList implements MyArrayListI{
+
+	@Override
+	public void accept(Visitor visit) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

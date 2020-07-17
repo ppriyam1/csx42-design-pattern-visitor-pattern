@@ -1,5 +1,7 @@
 package arrayvisitors.adt;
 
-public interface MyArrayListI{
+import arrayvisitors.visitors.Element;
+
+public interface MyArrayListI extends Element {
 
 }

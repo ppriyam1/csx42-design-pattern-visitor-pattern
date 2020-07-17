@@ -28,15 +28,17 @@ public final class FileProcessor {
 	* @exception FileNotFoundException On input file not found.
 	* @exception IOException On any I/O errors while reading lines from input file.
 	*/
-	public FileProcessor(String inputFilePath)
+	public FileProcessor(String inputFile)
 		throws InvalidPathException, SecurityException, FileNotFoundException, IOException {
 
-		if (!Files.exists(Paths.get(inputFilePath))) {
+		if (!Files.exists(Paths.get(inputFile))) {
 			throw new FileNotFoundException("invalid input file or input file in incorrect location");
 		}
 
-		reader = new BufferedReader(new FileReader(new File(inputFilePath)));
+		reader = new BufferedReader(new FileReader(new File(inputFile)));
 	}
+
+	
 
 	/**
 	* Retrieves and returns the next line in the input file.

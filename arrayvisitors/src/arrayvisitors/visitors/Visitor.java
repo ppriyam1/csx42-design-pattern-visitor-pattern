@@ -1,4 +1,9 @@
 package arrayvisitors.visitors;
 
-public class Visitor {
+import arrayvisitors.adt.MyArray;
+
+public interface Visitor {
+
+	public void visit(MyArray myArrayVisit);
+
 }
