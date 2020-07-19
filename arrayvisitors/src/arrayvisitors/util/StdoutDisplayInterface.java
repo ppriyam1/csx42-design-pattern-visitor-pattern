@@ -2,6 +2,12 @@ package arrayvisitors.util;
 
 public interface StdoutDisplayInterface{
 	
-	public void print();
+
+	/**
+	 * Method to print output to a file.
+	 */
+	public void printToMissingIntFile(String fileName);
+	
+	public void printToCommonIntFile(String fileName);
 
 }

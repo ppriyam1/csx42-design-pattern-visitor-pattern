@@ -2,45 +2,61 @@ package arrayvisitors.adt;
 
 import java.util.Arrays;
 
-import arrayvisitors.visitors.Visitor;
+import arrayvisitors.visitors.VisitorI;
 
-public class MyArrayList<T> implements MyArrayListI<Object> {
+public class MyArrayList<T extends MyArrayI<Integer>> implements MyArrayListI<MyArrayI<Integer>> {
+
+	private static int INITIAL_CAPACITY = 2;
 
 	private int size;
-	private static int INITIAL_CAPACITY = 2;
+
 	private Object[] myArrayList;
 
-	public MyArrayList() {
-		this(INITIAL_CAPACITY);
-	}
-
+	/**
+	 * @param initialCapacity
+	 */
 	public MyArrayList(int initialCapacity) {
 		this.size = 0;
 		this.myArrayList = new Object[initialCapacity];
 	}
 
-	@Override
-	public void add(Object myArrayObject) {
-		if (myArrayList.length - this.size <= 0) {
-			increaseCapacity();
-		}
-		myArrayList[size] = myArrayObject;
-		// System.out.println(myArrayList[size]);
-		size++;
+	public MyArrayList() {
+		this(INITIAL_CAPACITY);
+	}
+
+	private int getSize() {
+		return this.size;
 	}
 
 	@Override
-	public void accept(Visitor visitor) {
-		visitor.visit(this);
-
+	public Object[] getMyArrayList() {
+		return this.myArrayList;
 	}
 
 	public void increaseCapacity() {
-		myArrayList = Arrays.copyOf(myArrayList, myArrayList.length + (myArrayList.length / 2));
+		this.myArrayList = Arrays.copyOf(this.myArrayList, this.myArrayList.length + (this.myArrayList.length / 2));
 	}
 
-	public Object[] getMyArrayList() {
-		return myArrayList;
+	@Override
+	public void add(final MyArrayI<Integer> myArrayObject) {
+		if (this.myArrayList != null && (myArrayList.length - this.size <= 0))
+			this.increaseCapacity();
+
+		this.myArrayList[this.size++] = myArrayObject;
 	}
 
+	@Override
+	public int size() {
+		return getSize();
+	}
+
+	@Override
+	public void accept(VisitorI visitor) {
+		visitor.visit(this);
+	}
+
+	@Override
+	public String toString() {
+		return "MyArrayList [size=" + size + ", myArrayList=" + Arrays.toString(myArrayList) + "]";
+	}
 }

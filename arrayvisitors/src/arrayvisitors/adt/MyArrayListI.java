@@ -1,14 +1,18 @@
 package arrayvisitors.adt;
 
-import arrayvisitors.visitors.Element;
+import arrayvisitors.visitors.ElementI;
 
-public interface MyArrayListI<T> extends Element {
+public interface MyArrayListI<T extends MyArrayI<Integer>> extends ElementI {
 
 	/**
 	 * Method to add objects of myArray to MyArrayList.
 	 * 
-	 * @param type
+	 * @param myArray
 	 */
-	void add(T type);
-	
+	public void add(MyArrayI<Integer> myArray);
+
+	public int size();
+
+	public Object[] getMyArrayList();
+
 }

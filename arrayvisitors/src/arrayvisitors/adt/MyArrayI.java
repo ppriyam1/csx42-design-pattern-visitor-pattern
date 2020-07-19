@@ -1,16 +1,16 @@
 package arrayvisitors.adt;
 
-import arrayvisitors.visitors.Element;
+import arrayvisitors.visitors.ElementI;
 
-public interface MyArrayI<T> extends Element {
+public interface MyArrayI<T extends Object> extends ElementI {
 
 	/**
 	 * Method to add element to an array.
 	 * 
-	 * @param type
+	 * @param integer
 	 */
-	void add(T type);
-	
+	void add(Integer integer);
+
 	/**
 	 * Method to return the elements present in array.
 	 * 

@@ -1,12 +1,11 @@
 package arrayvisitors.visitors;
 
+import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayListI;
 import arrayvisitors.util.Results;
-import arrayvisitors.adt.MyArrayList;
-import arrayvisitors.adt.MyArray;
 
-public class CommonIntsVisitor implements Visitor {
+public class CommonIntsVisitor implements VisitorI {
 
 	private Results results;
 
@@ -20,12 +19,13 @@ public class CommonIntsVisitor implements Visitor {
 	}
 
 	@Override
-	public void visit(MyArrayListI<Object> myArrayListVisitI) {
+	public void visit(MyArrayListI<MyArrayI<Integer>> myArrayListVisitI) {
 
-		Object[] myArrayListVisit = ((MyArrayList<Object>) myArrayListVisitI).getMyArrayList();
+		Object[] myArrayListVisit = myArrayListVisitI.getMyArrayList();
 
 		@SuppressWarnings("unchecked")
 		Integer[] arrayList1 = ((MyArray<Integer>) myArrayListVisit[0]).getMyArray();
+
 		@SuppressWarnings("unchecked")
 		Integer[] arrayList2 = ((MyArray<Integer>) myArrayListVisit[1]).getMyArray();
 

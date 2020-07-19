@@ -7,14 +7,14 @@ import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayList;
 import arrayvisitors.adt.MyArrayListI;
-
+import arrayvisitors.util.FileDisplayInterface;
 import arrayvisitors.util.FileProcessor;
 import arrayvisitors.util.Results;
 import arrayvisitors.visitors.CommonIntsVisitor;
 import arrayvisitors.visitors.MissingIntsVisitor;
 //import arrayvisitors.util.Results;
 import arrayvisitors.visitors.PopulateMyArrayVisitor;
-import arrayvisitors.visitors.Visitor;
+import arrayvisitors.visitors.VisitorI;
 
 /**
  * @author preeti priyam
@@ -28,51 +28,58 @@ public class Driver {
 		 * the argument value is not given java takes the default value specified in
 		 * build.xml. To avoid that, below condition is used
 		 */
-		if ((args.length != 2) || (args[0].equals("${input1}")) || (args[1].equals("${input2}"))) {
+		if ((args.length != 4) || (args[0].equals("${input1}")) || (args[1].equals("${input2}"))
+				|| (args[2].equals("${commonintsout}")) || (args[3].equals("${missingintsout}"))) {
 			System.err.println("Error: Incorrect number of arguments. Program accepts 2 arguments.");
 			System.exit(0);
 		}
 		System.out.println("Hello World! Lets get started with the assignment");
 
-		MyArrayI<Integer> myArrayI1 = new MyArray<Integer>();
-		MyArrayI<Integer> myArrayI2 = new MyArray<Integer>();
+		MyArrayI<Integer> myArray1 = new MyArray<>();
+		MyArrayI<Integer> myArray2 = new MyArray<>();
 
 		final String INPUT_FILE_PATH1 = "./" + args[0];
 		final String INPUT_FILE_PATH2 = "./" + args[1];
 
-		MyArrayListI<Object> myArrayListI = new MyArrayList<Object>();
+		MyArrayListI<MyArrayI<Integer>> myArrayList = new MyArrayList<>();
 
 		Results results = new Results();
+
 		try {
 
-			Visitor populateVisitor = new PopulateMyArrayVisitor();
-			((PopulateMyArrayVisitor) populateVisitor).setFilePath(new FileProcessor(INPUT_FILE_PATH1));
+			VisitorI populateVisitor1 = new PopulateMyArrayVisitor(new FileProcessor(INPUT_FILE_PATH1));
+			myArray1.accept(populateVisitor1);
 
-			myArrayI1.accept(populateVisitor);
-			System.out.println("inputFile1 = " + myArrayI1.toString());
+			System.out.println("inputFile1 = " + myArray1.toString());
 
-			((PopulateMyArrayVisitor) populateVisitor).setFilePath(new FileProcessor(INPUT_FILE_PATH2));
-			myArrayI2.accept(populateVisitor);
+			VisitorI populateVisitor2 = new PopulateMyArrayVisitor(new FileProcessor(INPUT_FILE_PATH2));
+			myArray2.accept(populateVisitor2);
 
-			System.out.println("inputFile2 = " + myArrayI2.toString());
+			System.out.println("inputFile2 = " + myArray2.toString());
+
 		} catch (InvalidPathException | SecurityException | IOException e) {
 			e.printStackTrace();
 		}
-		myArrayListI.add(myArrayI1);
-		myArrayListI.add(myArrayI2);
 
-		Visitor commonIntsVisitor = new CommonIntsVisitor(results);
-		myArrayListI.accept(commonIntsVisitor);
-		
-		Visitor missingIntsVisitor = new MissingIntsVisitor(results);
-		
-		//missingIntsVisitor.visit(myArrayI1);
-		//missingIntsVisitor.visit(myArrayI2);
-		
-		myArrayI1.accept(missingIntsVisitor);
-		myArrayI2.accept(missingIntsVisitor);
-		
+		myArrayList.add(myArray1);
+		myArrayList.add(myArray2);
+
+		VisitorI commonIntsVisitor = new CommonIntsVisitor(results);
+		myArrayList.accept(commonIntsVisitor);
+
+		VisitorI missingIntsVisitor = new MissingIntsVisitor(results);
+
+		// missingIntsVisitor.visit(myArrayI1);
+		// missingIntsVisitor.visit(myArrayI2);
+
+		myArray1.accept(missingIntsVisitor);
+		myArray2.accept(missingIntsVisitor);
+
 		System.out.println(results.getMissingIntegers());
-		
+
+		FileDisplayInterface fileout = results;
+		((Results) fileout).printToCommonIntFile(args[2]);
+		((Results) fileout).printToMissingIntFile(args[3]);
+
 	}
 }
