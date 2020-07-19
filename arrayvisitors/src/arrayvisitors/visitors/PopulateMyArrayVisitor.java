@@ -1,39 +1,41 @@
 package arrayvisitors.visitors;
 
-import arrayvisitors.adt.MyArray;
+import arrayvisitors.adt.MyArrayI;
+import arrayvisitors.adt.MyArrayListI;
+
 import arrayvisitors.util.FileProcessor;
 
 public class PopulateMyArrayVisitor implements Visitor {
-	
-	//private static final String ALPHANUMERIC_PATTERN = "^[a-zA-Z0-9.]*$";
+
+	// private static final String ALPHANUMERIC_PATTERN = "^[a-zA-Z0-9.]*$";
 	private FileProcessor fileProcessor;
-	
+
+	public PopulateMyArrayVisitor() {
+
+	}
+
 	@Override
-	public void visit(MyArray myArrayVisit) {
+	public void visit(MyArrayI<Integer> myArrayVisit) {
 		try {
-		String instruction = fileProcessor.poll();
-		while(instruction != null) {
-			//String[] formatter = instruction.split(ALPHANUMERIC_PATTERN);
-			//for(int i = 0; i < formatter.length; i++) {
+			String instruction = fileProcessor.poll();
+			while (instruction != null) {
 				myArrayVisit.add(Integer.parseInt(instruction));
-				
 				instruction = fileProcessor.poll();
-			//}
+			}
+		} catch (Exception e) {
+			// TODO
 		}
-		}
-		catch(Exception e){
-		//TODO
-		}
-		
+
 	}
 
-	public FileProcessor getFileProcessor() {
-		return fileProcessor;
+	public void setFilePath(FileProcessor fileProcessor) {
+		this.fileProcessor = fileProcessor;
 	}
 
-	public void setFileProcessor(FileProcessor fileProcessorI) {
-		this.fileProcessor = fileProcessorI;
+	@Override
+	public void visit(MyArrayListI<Object> myArrayVisit) {
+		// TODO throw an exception indicating that the the behavior is undefined
+
 	}
-	
-	
+
 }

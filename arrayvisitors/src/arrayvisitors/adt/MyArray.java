@@ -1,12 +1,9 @@
 package arrayvisitors.adt;
 
 import java.util.Arrays;
-
 import arrayvisitors.visitors.Visitor;
 
-//import arrayvisitors.visitors.VisitorI;
-
-public class MyArray implements MyArrayI<Integer> {
+public class MyArray<T> implements MyArrayI<Integer> {
 
 	private int size;
 	private static int INITIAL_CAPACITY = 10;
@@ -23,28 +20,16 @@ public class MyArray implements MyArrayI<Integer> {
 
 	@Override
 	public void add(Integer dataI) {
-		//System.out.println("++++" + dataI);
+		// System.out.println("++++" + dataI);
 		if (myArray.length - this.size <= 0) {
 			increaseCapacity();
 		}
-		myArray[size] = dataI; 
+		myArray[size] = dataI;
 		size++;
 	}
 
 	public void increaseCapacity() {
 		myArray = Arrays.copyOf(myArray, myArray.length + (myArray.length / 2));
-	}
-
-	@Override
-	public Integer get(int position) {
-		// TODO
-		return null;
-	}
-
-	@Override
-	public boolean contains(int position) {
-		// TODO
-		return false;
 	}
 
 	@Override
@@ -57,7 +42,7 @@ public class MyArray implements MyArrayI<Integer> {
 		visitor.visit(this);
 
 	}
-	
+
 	public int getSize() {
 		return size;
 	}
@@ -65,11 +50,11 @@ public class MyArray implements MyArrayI<Integer> {
 	public Integer[] getMyArray() {
 		return myArray;
 	}
-	
+
 	@Override
 	public String toString() {
 		String array = "";
-		for(int i=0; i < size; i++) {
+		for (int i = 0; i < size; i++) {
 			array += myArray[i] + " ";
 		}
 		return array;

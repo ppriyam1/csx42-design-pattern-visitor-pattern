@@ -5,8 +5,14 @@ import java.nio.file.InvalidPathException;
 
 import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
+import arrayvisitors.adt.MyArrayList;
+import arrayvisitors.adt.MyArrayListI;
+
 import arrayvisitors.util.FileProcessor;
 import arrayvisitors.util.Results;
+import arrayvisitors.visitors.CommonIntsVisitor;
+import arrayvisitors.visitors.MissingIntsVisitor;
+//import arrayvisitors.util.Results;
 import arrayvisitors.visitors.PopulateMyArrayVisitor;
 import arrayvisitors.visitors.Visitor;
 
@@ -27,44 +33,46 @@ public class Driver {
 			System.exit(0);
 		}
 		System.out.println("Hello World! Lets get started with the assignment");
-		String inputFileName1 = null;
-		String inputFileName2 = null;
-		FileProcessor fileProcessor = null;
-		
-		MyArrayI myArrayI1 = new MyArray();
-		MyArrayI myArrayI2 = new MyArray();
-		
-		try {
-			inputFileName1 = args[0];
-			inputFileName2 = args[1];
-		} catch (Exception e) {
-			// TODO
-		}
-		
-		final String PATH1 = "./" + inputFileName1;
-		final String PATH2 = "./" + inputFileName2;
 
+		MyArrayI<Integer> myArrayI1 = new MyArray<Integer>();
+		MyArrayI<Integer> myArrayI2 = new MyArray<Integer>();
+
+		final String INPUT_FILE_PATH1 = "./" + args[0];
+		final String INPUT_FILE_PATH2 = "./" + args[1];
+
+		MyArrayListI<Object> myArrayListI = new MyArrayList<Object>();
+
+		Results results = new Results();
 		try {
-			 fileProcessor = new FileProcessor(PATH1);
+
+			Visitor populateVisitor = new PopulateMyArrayVisitor();
+			((PopulateMyArrayVisitor) populateVisitor).setFilePath(new FileProcessor(INPUT_FILE_PATH1));
+
+			myArrayI1.accept(populateVisitor);
+			System.out.println("inputFile1 = " + myArrayI1.toString());
+
+			((PopulateMyArrayVisitor) populateVisitor).setFilePath(new FileProcessor(INPUT_FILE_PATH2));
+			myArrayI2.accept(populateVisitor);
+
+			System.out.println("inputFile2 = " + myArrayI2.toString());
 		} catch (InvalidPathException | SecurityException | IOException e) {
 			e.printStackTrace();
 		}
+		myArrayListI.add(myArrayI1);
+		myArrayListI.add(myArrayI2);
 
-		// Results results = new Results();
-		Visitor populateVisitor = new PopulateMyArrayVisitor();
-		((PopulateMyArrayVisitor) populateVisitor).setFileProcessor(fileProcessor);
-		myArrayI1.accept(populateVisitor);
-		System.out.println("inputFile1 = " + myArrayI1.toString());
+		Visitor commonIntsVisitor = new CommonIntsVisitor(results);
+		myArrayListI.accept(commonIntsVisitor);
 		
-		try {
-			fileProcessor= new FileProcessor(PATH2);
-		} catch (InvalidPathException | SecurityException | IOException e) {
-			e.printStackTrace();
-		}
+		Visitor missingIntsVisitor = new MissingIntsVisitor(results);
 		
-		((PopulateMyArrayVisitor) populateVisitor).setFileProcessor(fileProcessor);
-		myArrayI2.accept(populateVisitor);
-		System.out.println("inputFile2 = " + myArrayI2.toString());
-
+		//missingIntsVisitor.visit(myArrayI1);
+		//missingIntsVisitor.visit(myArrayI2);
+		
+		myArrayI1.accept(missingIntsVisitor);
+		myArrayI2.accept(missingIntsVisitor);
+		
+		System.out.println(results.getMissingIntegers());
+		
 	}
 }
