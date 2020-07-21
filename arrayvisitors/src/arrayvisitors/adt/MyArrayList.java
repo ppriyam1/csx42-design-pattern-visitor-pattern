@@ -4,20 +4,20 @@ import java.util.Arrays;
 
 import arrayvisitors.visitors.VisitorI;
 
-public class MyArrayList<T extends MyArrayI<Integer>> implements MyArrayListI<MyArrayI<Integer>> {
+public final class MyArrayList implements MyArrayListI {
 
 	private static int INITIAL_CAPACITY = 2;
 
 	private int size;
 
-	private Object[] myArrayList;
+	private Object[] myArray;
 
 	/**
 	 * @param initialCapacity
 	 */
 	public MyArrayList(int initialCapacity) {
 		this.size = 0;
-		this.myArrayList = new Object[initialCapacity];
+		this.myArray = new Object[initialCapacity];
 	}
 
 	public MyArrayList() {
@@ -30,19 +30,19 @@ public class MyArrayList<T extends MyArrayI<Integer>> implements MyArrayListI<My
 
 	@Override
 	public Object[] getMyArrayList() {
-		return this.myArrayList;
+		return this.myArray;
 	}
 
 	public void increaseCapacity() {
-		this.myArrayList = Arrays.copyOf(this.myArrayList, this.myArrayList.length + (this.myArrayList.length / 2));
+		this.myArray = Arrays.copyOf(this.myArray, this.myArray.length + (this.myArray.length / 2));
 	}
 
 	@Override
-	public void add(final MyArrayI<Integer> myArrayObject) {
-		if (this.myArrayList != null && (myArrayList.length - this.size <= 0))
+	public void add(final MyArrayI myArrayObject) {
+		if (this.myArray != null && (myArray.length - this.size <= 0))
 			this.increaseCapacity();
 
-		this.myArrayList[this.size++] = myArrayObject;
+		this.myArray[this.size++] = myArrayObject;
 	}
 
 	@Override
@@ -56,7 +56,18 @@ public class MyArrayList<T extends MyArrayI<Integer>> implements MyArrayListI<My
 	}
 
 	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		MyArrayList list = (MyArrayList) super.clone();
+		list.myArray = (Object[]) myArray.clone();
+		return list;
+	}
+
+	@Override
+	protected void finalize() throws Throwable {
+	}
+
+	@Override
 	public String toString() {
-		return "MyArrayList [size=" + size + ", myArrayList=" + Arrays.toString(myArrayList) + "]";
+		return "MyArrayList [size=" + size + ", myArrayList=" + Arrays.toString(myArray) + "]";
 	}
 }

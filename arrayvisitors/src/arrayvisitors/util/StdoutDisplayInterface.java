@@ -1,13 +1,9 @@
 package arrayvisitors.util;
 
-public interface StdoutDisplayInterface{
-	
+public interface StdoutDisplayInterface {
 
 	/**
-	 * Method to print output to a file.
+	 * Method to print output to the console.
 	 */
-	public void printToMissingIntFile(String fileName);
-	
-	public void printToCommonIntFile(String fileName);
-
+	public void printToStdout();
 }

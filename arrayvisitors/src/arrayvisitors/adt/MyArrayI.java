@@ -2,7 +2,7 @@ package arrayvisitors.adt;
 
 import arrayvisitors.visitors.ElementI;
 
-public interface MyArrayI<T extends Object> extends ElementI {
+public interface MyArrayI extends ElementI {
 
 	/**
 	 * Method to add element to an array.

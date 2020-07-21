@@ -2,14 +2,14 @@ package arrayvisitors.adt;
 
 import java.util.Arrays;
 
+import arrayvisitors.exception.PopulateMyArrayVisitorException;
 import arrayvisitors.visitors.VisitorI;
 
 /**
  * @author preetipriyam
  *
- * @param <T>
  */
-public class MyArray<T extends Object> implements MyArrayI<Integer> {
+public final class MyArray implements MyArrayI {
 
 	private static final int INITIAL_CAPACITY = 10;
 
@@ -55,7 +55,22 @@ public class MyArray<T extends Object> implements MyArrayI<Integer> {
 
 	@Override
 	public void accept(VisitorI visitor) {
-		visitor.visit(this);
+		try {
+			visitor.visit(this);
+		} catch (PopulateMyArrayVisitorException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		MyArray array = (MyArray) super.clone();
+		array.myArray = (Integer[]) myArray.clone();
+		return array;
+	}
+	
+	@Override
+	protected void finalize() throws Throwable {
 	}
 
 	@Override

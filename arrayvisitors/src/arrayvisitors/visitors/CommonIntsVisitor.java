@@ -3,31 +3,36 @@ package arrayvisitors.visitors;
 import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayListI;
+import arrayvisitors.exception.ErrorCode;
+import arrayvisitors.exception.PopulateMyArrayVisitorException;
+import arrayvisitors.util.MyLogger;
 import arrayvisitors.util.Results;
+import arrayvisitors.util.MyLogger.DebugLevel;
 
 public class CommonIntsVisitor implements VisitorI {
 
 	private Results results;
+	MyLogger LOGGER = MyLogger.getMyLoggerInstance();
 
 	public CommonIntsVisitor(Results resultsI) {
 		this.results = resultsI;
 	}
 
 	@Override
-	public void visit(MyArrayI<Integer> myArrayVisit) {
-		// TODO throw an exception indicating that the the behavior is undefined
+	public void visit(MyArrayI myArrayVisit) throws PopulateMyArrayVisitorException {
+		String message = ErrorCode.EMPTY_METHOD + ": " + "Behaviour is undefined";
+		LOGGER.writeMessage(message, DebugLevel.EXCEPTION);
+		throw new PopulateMyArrayVisitorException(message);
 	}
 
 	@Override
-	public void visit(MyArrayListI<MyArrayI<Integer>> myArrayListVisitI) {
+	public void visit(MyArrayListI myArrayListVisitI) {
 
 		Object[] myArrayListVisit = myArrayListVisitI.getMyArrayList();
 
-		@SuppressWarnings("unchecked")
-		Integer[] arrayList1 = ((MyArray<Integer>) myArrayListVisit[0]).getMyArray();
+		Integer[] arrayList1 = ((MyArray) myArrayListVisit[0]).getMyArray();
 
-		@SuppressWarnings("unchecked")
-		Integer[] arrayList2 = ((MyArray<Integer>) myArrayListVisit[1]).getMyArray();
+		Integer[] arrayList2 = ((MyArray) myArrayListVisit[1]).getMyArray();
 
 		for (int i = 0; i < arrayList1.length; i++) {
 			for (int j = 0; j < arrayList2.length; j++) {
@@ -40,6 +45,11 @@ public class CommonIntsVisitor implements VisitorI {
 			}
 		}
 
+	}
+
+	@Override
+	public String toString() {
+		return "CommonIntsVisitor [results=" + results + "]";
 	}
 
 }

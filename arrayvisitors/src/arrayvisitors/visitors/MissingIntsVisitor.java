@@ -6,9 +6,12 @@ import java.util.TreeSet;
 import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayListI;
+import arrayvisitors.util.MyLogger;
 import arrayvisitors.util.Results;
 
 public class MissingIntsVisitor implements VisitorI {
+	
+	MyLogger LOGGER = MyLogger.getMyLoggerInstance();
 
 	private Results results;
 
@@ -17,9 +20,9 @@ public class MissingIntsVisitor implements VisitorI {
 	}
 
 	@Override
-	public void visit(MyArrayI<Integer> myArrayVisitI) {
+	public void visit(MyArrayI myArrayVisitI) {
 		Set<Integer> missingInt = new TreeSet<Integer>();
-		Integer[] myArrays = ((MyArray<Integer>) myArrayVisitI).getMyArray();
+		Integer[] myArrays = ((MyArray) myArrayVisitI).getMyArray();
 		for (int i = 0; i <= 99; i++) {
 			missingInt.add(i);
 		}
@@ -30,13 +33,16 @@ public class MissingIntsVisitor implements VisitorI {
 		}
 		results.addMissingInts(missingInt);
 
-		// System.out.println(missingInt);
-
 	}
 
 	@Override
-	public void visit(MyArrayListI<MyArrayI<Integer>> myArrayVisit) {
+	public void visit(MyArrayListI myArrayVisit) {
 		// TODO throw an exception indicating that the the behavior is undefined
+	}
+	
+	@Override
+	public String toString() {
+		return "MissingIntsVisitor [results=" + results + "]";
 	}
 
 }
