@@ -34,15 +34,15 @@ public class CommonIntsVisitor implements VisitorI {
 
 		Object[] myArrayListVisit = myArrayListVisitI.getMyArrayList();
 
-		Integer[] arrayList1 = ((MyArray) myArrayListVisit[0]).getMyArray();
+		String[] arrayList1 = ((MyArray) myArrayListVisit[0]).getMyArray();
 
-		Integer[] arrayList2 = ((MyArray) myArrayListVisit[1]).getMyArray();
+		String[] arrayList2 = ((MyArray) myArrayListVisit[1]).getMyArray();
 
 		for (int i = 0; i < arrayList1.length; i++) {
 			for (int j = 0; j < arrayList2.length; j++) {
 
 				if (arrayList1[i] != null && arrayList2[j] != null) {
-					if (arrayList1[i] == arrayList2[j]) {
+					if (arrayList1[i].equals(arrayList2[j])) {
 						results.addCommonInt(arrayList1[i]);
 					}
 				}

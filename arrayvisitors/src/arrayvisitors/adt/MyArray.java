@@ -13,7 +13,7 @@ public final class MyArray implements MyArrayI {
 
 	private static final int INITIAL_CAPACITY = 10;
 
-	private Integer[] myArray;
+	private String[] myArray;
 	private int size;
 
 	/**
@@ -21,7 +21,7 @@ public final class MyArray implements MyArrayI {
 	 */
 	public MyArray(int initialCapacity) {
 		this.size = 0;
-		this.myArray = new Integer[initialCapacity];
+		this.myArray = new String[initialCapacity];
 	}
 
 	public MyArray() {
@@ -32,7 +32,7 @@ public final class MyArray implements MyArrayI {
 		return size;
 	}
 
-	public Integer[] getMyArray() {
+	public String[] getMyArray() {
 		return myArray;
 	}
 
@@ -44,7 +44,7 @@ public final class MyArray implements MyArrayI {
 	}
 
 	@Override
-	public void add(final Integer dataI) {
+	public void add(final String dataI) {
 		if (this.myArray != null && (this.myArray.length - this.size) <= 0)
 			this.increaseCapacity();
 
@@ -68,7 +68,7 @@ public final class MyArray implements MyArrayI {
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		MyArray array = (MyArray) super.clone();
-		array.myArray = (Integer[]) myArray.clone();
+		array.myArray = (String[]) myArray.clone();
 		return array;
 	}
 

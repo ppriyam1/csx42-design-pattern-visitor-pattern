@@ -2,6 +2,7 @@ package arrayvisitors.visitors;
 
 import java.util.Set;
 import java.util.TreeSet;
+import java.text.DecimalFormat;
 
 import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
@@ -28,12 +29,13 @@ public class MissingIntsVisitor implements VisitorI {
 
 	@Override
 	public void visit(MyArrayI myArrayVisitI) {
-		Set<Integer> missingInt = new TreeSet<Integer>();
-		Integer[] myArrays = ((MyArray) myArrayVisitI).getMyArray();
+		Set<String> missingInt = new TreeSet<String>();
+		DecimalFormat formatter = new DecimalFormat("00");
+		String[] myArrays = ((MyArray) myArrayVisitI).getMyArray();
 		for (int i = 0; i <= 99; i++) {
-			missingInt.add(i);
+			missingInt.add(formatter.format(i));
 		}
-		for (Integer myArray : myArrays) {
+		for (String myArray : myArrays) {
 			if (myArray != null) {
 				missingInt.remove(myArray);
 			}

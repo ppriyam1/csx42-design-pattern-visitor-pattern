@@ -43,7 +43,14 @@ public class PopulateMyArrayVisitor implements VisitorI {
 
 			while (instruction != null) {
 				try {
-					myArrayVisit.add(Integer.parseInt(instruction));
+					if (Integer.parseInt(instruction) < 0 || Integer.parseInt(instruction) > 99) {
+						String message = ErrorCode.INVALID_INPUT_FORMAT + ": " + "Input value " + instruction
+								+ " is invalid";
+						LOGGER.writeMessage(message, DebugLevel.EXCEPTION);
+						instruction = fileProcessor.poll();
+						continue;
+					}
+					myArrayVisit.add(instruction);
 				} catch (NumberFormatException e) {
 					String message = ErrorCode.INVALID_INPUT + ": " + "Input value " + instruction + " is invalid";
 					LOGGER.writeMessage(message, DebugLevel.EXCEPTION);

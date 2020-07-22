@@ -1,24 +1,22 @@
 package arrayvisitors.util;
 
-import java.util.List;
-import java.util.Set;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
 
 import arrayvisitors.exception.ResultException;
 import arrayvisitors.util.MyLogger.DebugLevel;
-
-import java.lang.Integer;
 
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
 	MyLogger LOGGER = MyLogger.getMyLoggerInstance();
 
-	private Set<Integer> commonIntegers = new LinkedHashSet<Integer>();
-	private List<Set<Integer>> missingIntegers = new ArrayList<Set<Integer>>();
+	private Set<String> commonIntegers = new LinkedHashSet<String>();
+	private List<Set<String>> missingIntegers = new ArrayList<Set<String>>();
 
 	private final Set<String> builder = new LinkedHashSet<String>();
 
@@ -29,28 +27,28 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 		builder.add(message + " \n");
 	}
 
-	public Set<Integer> getCommonIntegers() {
+	public Set<String> getCommonIntegers() {
 		return commonIntegers;
 	}
 
-	public void setCommonIntegers(Set<Integer> commonIntegers) {
+	public void setCommonIntegers(Set<String> commonIntegers) {
 		this.commonIntegers = commonIntegers;
 	}
 
-	public void addCommonInt(int value) {
+	public void addCommonInt(String value) {
 		this.commonIntegers.add(value);
 		String message = "Common Integer = " + value;
 		this.add(message);
 
 	}
 
-	public void addMissingInts(Set<Integer> value) {
+	public void addMissingInts(Set<String> value) {
 		this.missingIntegers.add(value);
 		String message = "Missing Integers in file" + (missingIntegers.size()) + " = " + value.toString();
 		this.add(message);
 	}
 
-	public List<Set<Integer>> getMissingIntegers() {
+	public List<Set<String>> getMissingIntegers() {
 		return missingIntegers;
 	}
 
@@ -59,7 +57,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
-			Integer[] array = new Integer[0];
+			String[] array = new String[0];
 			array = commonIntegers.toArray(array);
 			for (int i = 0; i < array.length; i++) {
 				writer.write(array[i].toString() + "\n");
@@ -76,7 +74,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 
 			for (int i = 0; i < missingIntegers.size(); i++) {
-				Integer[] array = new Integer[0];
+				String[] array = new String[0];
 				array = missingIntegers.get(i).toArray(array);
 				writer.append("inputFile " + (i + 1) + "\n");
 

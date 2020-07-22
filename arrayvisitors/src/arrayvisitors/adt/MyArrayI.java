@@ -9,7 +9,7 @@ public interface MyArrayI extends ElementI {
 	 * 
 	 * @param integer
 	 */
-	void add(Integer integer);
+	void add(String integer);
 
 	/**
 	 * Method to return the elements present in array.
