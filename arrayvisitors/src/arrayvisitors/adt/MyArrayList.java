@@ -2,8 +2,13 @@ package arrayvisitors.adt;
 
 import java.util.Arrays;
 
+import arrayvisitors.exception.VisitorException;
 import arrayvisitors.visitors.VisitorI;
 
+/**
+ * @author preetipriyam
+ *
+ */
 public final class MyArrayList implements MyArrayListI {
 
 	private static int INITIAL_CAPACITY = 2;
@@ -33,6 +38,9 @@ public final class MyArrayList implements MyArrayListI {
 		return this.myArray;
 	}
 
+	/**
+	 * Method to increase the capacity of an arrayList.
+	 */
 	public void increaseCapacity() {
 		this.myArray = Arrays.copyOf(this.myArray, this.myArray.length + (this.myArray.length / 2));
 	}
@@ -51,7 +59,7 @@ public final class MyArrayList implements MyArrayListI {
 	}
 
 	@Override
-	public void accept(VisitorI visitor) {
+	public void accept(VisitorI visitor) throws VisitorException {
 		visitor.visit(this);
 	}
 

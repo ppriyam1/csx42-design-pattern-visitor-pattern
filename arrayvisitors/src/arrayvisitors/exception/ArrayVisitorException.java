@@ -3,10 +3,11 @@ package arrayvisitors.exception;
 import arrayvisitors.util.MyLogger;
 import arrayvisitors.util.MyLogger.DebugLevel;
 
+/**
+ * @author preetipriyam
+ *
+ */
 public class ArrayVisitorException extends Exception {
-
-	//TODO
-	static MyLogger LOGGER = MyLogger.getMyLoggerInstance();
 
 	private static final long serialVersionUID = -7813963686940323569L;
 
@@ -42,7 +43,7 @@ public class ArrayVisitorException extends Exception {
 
 		String exceptionMessage = exception.getErrorCode() + ": " + exception.getMessage().getClass().getName();
 
-		LOGGER.writeMessage(exceptionMessage, DebugLevel.EXCEPTION);
+		MyLogger.getMyLoggerInstance().writeMessage(exceptionMessage, DebugLevel.EXCEPTION);
 	}
 
 }

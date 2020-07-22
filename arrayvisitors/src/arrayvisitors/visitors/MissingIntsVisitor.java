@@ -6,9 +6,16 @@ import java.util.TreeSet;
 import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayListI;
+import arrayvisitors.exception.ErrorCode;
+import arrayvisitors.exception.VisitorException;
 import arrayvisitors.util.MyLogger;
 import arrayvisitors.util.Results;
+import arrayvisitors.util.MyLogger.DebugLevel;
 
+/**
+ * @author preetipriyam
+ *
+ */
 public class MissingIntsVisitor implements VisitorI {
 	
 	MyLogger LOGGER = MyLogger.getMyLoggerInstance();
@@ -36,8 +43,10 @@ public class MissingIntsVisitor implements VisitorI {
 	}
 
 	@Override
-	public void visit(MyArrayListI myArrayVisit) {
-		// TODO throw an exception indicating that the the behavior is undefined
+	public void visit(MyArrayListI myArrayVisit) throws VisitorException{
+		String message = ErrorCode.EMPTY_METHOD + ": " + "Behaviour is undefined";
+		LOGGER.writeMessage(message, DebugLevel.EXCEPTION);
+		throw new VisitorException(message);
 	}
 	
 	@Override

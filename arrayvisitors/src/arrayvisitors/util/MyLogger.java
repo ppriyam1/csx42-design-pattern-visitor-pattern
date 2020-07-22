@@ -3,7 +3,7 @@ package arrayvisitors.util;
 public class MyLogger {
 
 	public enum DebugLevel {
-		MY_ARRAY, MY_ARRAYLIST, EXCEPTION, RESULTS, NONE
+		EXCEPTION, RESULTS, NONE
 	};
 
 	private static volatile MyLogger myLoggerInstance;
@@ -27,17 +27,11 @@ public class MyLogger {
 
 	public static void setDebugValue(int levelIn) {
 		switch (levelIn) {
-		case 3:
+		case 1:
 			debugLevel = DebugLevel.RESULTS;
 			break;
-		case 2:
-			debugLevel = DebugLevel.EXCEPTION;
-			break;
-		case 1:
-			debugLevel = DebugLevel.MY_ARRAY;
-			break;
 		case 0:
-			debugLevel = DebugLevel.MY_ARRAYLIST;
+			debugLevel = DebugLevel.EXCEPTION;
 			break;
 		default:
 			debugLevel = DebugLevel.NONE;

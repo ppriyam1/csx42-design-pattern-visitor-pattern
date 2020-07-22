@@ -4,11 +4,15 @@ import arrayvisitors.adt.MyArray;
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayListI;
 import arrayvisitors.exception.ErrorCode;
-import arrayvisitors.exception.PopulateMyArrayVisitorException;
+import arrayvisitors.exception.VisitorException;
 import arrayvisitors.util.MyLogger;
 import arrayvisitors.util.Results;
 import arrayvisitors.util.MyLogger.DebugLevel;
 
+/**
+ * @author preetipriyam
+ *
+ */
 public class CommonIntsVisitor implements VisitorI {
 
 	private Results results;
@@ -19,10 +23,10 @@ public class CommonIntsVisitor implements VisitorI {
 	}
 
 	@Override
-	public void visit(MyArrayI myArrayVisit) throws PopulateMyArrayVisitorException {
+	public void visit(MyArrayI myArrayVisit) throws VisitorException {
 		String message = ErrorCode.EMPTY_METHOD + ": " + "Behaviour is undefined";
 		LOGGER.writeMessage(message, DebugLevel.EXCEPTION);
-		throw new PopulateMyArrayVisitorException(message);
+		throw new VisitorException(message);
 	}
 
 	@Override

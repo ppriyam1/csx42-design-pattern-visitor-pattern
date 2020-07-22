@@ -1,5 +1,12 @@
 package arrayvisitors.exception;
 
+import arrayvisitors.util.MyLogger;
+import arrayvisitors.util.MyLogger.DebugLevel;
+
+/**
+ * @author preetipriyam
+ *
+ */
 public class ResultException extends ArrayVisitorException {
 
 	private static final long serialVersionUID = 7467057032129109149L;
@@ -35,6 +42,7 @@ public class ResultException extends ArrayVisitorException {
 	 * @throws Exception
 	 */
 	public static void processException(ResultException exception) throws Exception {
+		MyLogger.getMyLoggerInstance().writeMessage("Something went wrong in Results class", DebugLevel.EXCEPTION);
 		throw new ArrayVisitorException(exception.getErrorCode() + ": " + exception.getMessage().getClass().getName());
 	}
 

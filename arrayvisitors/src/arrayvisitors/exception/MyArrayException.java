@@ -1,5 +1,12 @@
 package arrayvisitors.exception;
 
+import arrayvisitors.util.MyLogger;
+import arrayvisitors.util.MyLogger.DebugLevel;
+
+/**
+ * @author preetipriyam
+ *
+ */
 public class MyArrayException extends ArrayVisitorException {
 
 	/**
@@ -38,6 +45,7 @@ public class MyArrayException extends ArrayVisitorException {
 	 * @throws Exception
 	 */
 	public static void processException(MyArrayException exception) throws Exception {
+		MyLogger.getMyLoggerInstance().writeMessage("Something went wrong in MyArray class", DebugLevel.EXCEPTION);
 		throw new ArrayVisitorException(exception.getErrorCode() + ": " + exception.getMessage().getClass().getName());
 	}
 

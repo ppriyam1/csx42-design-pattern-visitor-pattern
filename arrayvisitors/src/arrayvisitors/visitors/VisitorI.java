@@ -2,18 +2,23 @@ package arrayvisitors.visitors;
 
 import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayListI;
-import arrayvisitors.exception.PopulateMyArrayVisitorException;
+import arrayvisitors.exception.VisitorException;
 
 public interface VisitorI {
 
 	/**
+	 * Method to visit MyArray class.
+	 * 
 	 * @param myArrayVisit
-	 * @throws PopulateMyArrayVisitorException 
+	 * @throws VisitorException 
 	 */
-	public void visit(MyArrayI myArrayVisit) throws PopulateMyArrayVisitorException;
+	public void visit(MyArrayI myArrayVisit) throws VisitorException;
 
 	/**
+	 * Method to visit MyArrayList class.
+	 * 
 	 * @param myArrayListVisit
+	 * @throws VisitorException 
 	 */
-	public void visit(MyArrayListI myArrayListVisit);
+	public void visit(MyArrayListI myArrayListVisit) throws VisitorException;
 }

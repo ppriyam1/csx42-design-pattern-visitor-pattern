@@ -11,8 +11,18 @@ public interface MyArrayListI extends ElementI {
 	 */
 	public void add(MyArrayI myArray);
 
+	/**
+	 * Method to return the elements present in array.
+	 * 
+	 * @return
+	 */
 	public int size();
 
+	/**
+	 * Method to return objects of MyArray.
+	 * 
+	 * @return
+	 */
 	public Object[] getMyArrayList();
 
 }

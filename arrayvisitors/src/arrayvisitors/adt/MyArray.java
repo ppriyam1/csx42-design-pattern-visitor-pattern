@@ -2,7 +2,7 @@ package arrayvisitors.adt;
 
 import java.util.Arrays;
 
-import arrayvisitors.exception.PopulateMyArrayVisitorException;
+import arrayvisitors.exception.VisitorException;
 import arrayvisitors.visitors.VisitorI;
 
 /**
@@ -36,6 +36,9 @@ public final class MyArray implements MyArrayI {
 		return myArray;
 	}
 
+	/**
+	 * Method to increase the capacity of an array.
+	 */
 	protected void increaseCapacity() {
 		this.myArray = Arrays.copyOf(myArray, myArray.length + (myArray.length / 2));
 	}
@@ -57,18 +60,18 @@ public final class MyArray implements MyArrayI {
 	public void accept(VisitorI visitor) {
 		try {
 			visitor.visit(this);
-		} catch (PopulateMyArrayVisitorException e) {
+		} catch (VisitorException e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
 	protected Object clone() throws CloneNotSupportedException {
 		MyArray array = (MyArray) super.clone();
 		array.myArray = (Integer[]) myArray.clone();
 		return array;
 	}
-	
+
 	@Override
 	protected void finalize() throws Throwable {
 	}

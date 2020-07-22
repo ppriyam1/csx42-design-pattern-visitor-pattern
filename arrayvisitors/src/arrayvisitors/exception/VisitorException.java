@@ -1,6 +1,13 @@
 package arrayvisitors.exception;
 
-public class PopulateMyArrayVisitorException extends ArrayVisitorException {
+import arrayvisitors.util.MyLogger;
+import arrayvisitors.util.MyLogger.DebugLevel;
+
+/**
+ * @author preetipriyam
+ *
+ */
+public class VisitorException extends ArrayVisitorException {
 	
 	private static final long serialVersionUID = 6125400767045125984L;
 	
@@ -9,7 +16,7 @@ public class PopulateMyArrayVisitorException extends ArrayVisitorException {
 	/**
 	 * @param message
 	 */
-	public PopulateMyArrayVisitorException(String message) {
+	public VisitorException(String message) {
 		super(message);
 	}
 
@@ -17,7 +24,7 @@ public class PopulateMyArrayVisitorException extends ArrayVisitorException {
 	 * @param message
 	 * @param errorCode
 	 */
-	public PopulateMyArrayVisitorException(ErrorCode code, String message) {
+	public VisitorException(ErrorCode code, String message) {
 		super(message);
 
 		this.code = code;
@@ -34,7 +41,8 @@ public class PopulateMyArrayVisitorException extends ArrayVisitorException {
 	 * @param exception
 	 * @throws Exception
 	 */
-	public static void processException(PopulateMyArrayVisitorException exception) throws Exception {
+	public static void processException(VisitorException exception) throws Exception {
+		MyLogger.getMyLoggerInstance().writeMessage("Something went wrong while performing Visitor actions", DebugLevel.EXCEPTION);
 		throw new ArrayVisitorException(exception.getErrorCode() + ": " + exception.getMessage().getClass().getName());
 	}
 

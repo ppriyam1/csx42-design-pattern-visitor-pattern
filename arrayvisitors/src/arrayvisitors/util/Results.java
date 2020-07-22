@@ -6,7 +6,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.TreeSet;
+import java.util.LinkedHashSet;
 
 import arrayvisitors.exception.ResultException;
 import arrayvisitors.util.MyLogger.DebugLevel;
@@ -14,19 +14,19 @@ import arrayvisitors.util.MyLogger.DebugLevel;
 import java.lang.Integer;
 
 public class Results implements FileDisplayInterface, StdoutDisplayInterface {
-	
+
 	MyLogger LOGGER = MyLogger.getMyLoggerInstance();
 
-	private Set<Integer> commonIntegers = new TreeSet<Integer>();
+	private Set<Integer> commonIntegers = new LinkedHashSet<Integer>();
 	private List<Set<Integer>> missingIntegers = new ArrayList<Set<Integer>>();
-	
-	private final StringBuilder builder = new StringBuilder();
+
+	private final Set<String> builder = new LinkedHashSet<String>();
 
 	public Results() {
 	}
-	
+
 	public void add(String message) {
-		builder.append(message + " \n");
+		builder.add(message + " \n");
 	}
 
 	public Set<Integer> getCommonIntegers() {
@@ -39,14 +39,14 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
 	public void addCommonInt(int value) {
 		this.commonIntegers.add(value);
-		String message = "Common Integer = "+value;
+		String message = "Common Integer = " + value;
 		this.add(message);
-		
+
 	}
 
 	public void addMissingInts(Set<Integer> value) {
 		this.missingIntegers.add(value);
-		String message = "Missing Integers in file" + (missingIntegers.size()) + " = " +value.toString();
+		String message = "Missing Integers in file" + (missingIntegers.size()) + " = " + value.toString();
 		this.add(message);
 	}
 
@@ -55,8 +55,8 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 	}
 
 	@Override
-	public void printToCommonIntFile(String fileName) {
-		
+	public void printToCommonIntFile(String fileName) throws ResultException {
+
 		try {
 			BufferedWriter writer = new BufferedWriter(new FileWriter(fileName));
 			Integer[] array = new Integer[0];
@@ -66,7 +66,7 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 			}
 			writer.close();
 		} catch (IOException e) {
-
+			throw new ResultException(e.getMessage());
 		}
 	}
 
@@ -95,7 +95,12 @@ public class Results implements FileDisplayInterface, StdoutDisplayInterface {
 
 	@Override
 	public void printToStdout() {
-		LOGGER.writeMessage(builder.toString(), DebugLevel.RESULTS);		
+		LOGGER.writeMessage(builder.toString(), DebugLevel.RESULTS);
+	}
+	
+	@Override
+	public String toString() {
+		return "Results [commonIntegers=" + commonIntegers + ", missingIntegers=" + missingIntegers + "]";
 	}
 
 }

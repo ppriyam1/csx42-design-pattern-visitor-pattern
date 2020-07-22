@@ -8,13 +8,14 @@ import arrayvisitors.adt.MyArrayI;
 import arrayvisitors.adt.MyArrayList;
 import arrayvisitors.adt.MyArrayListI;
 import arrayvisitors.exception.ResultException;
+import arrayvisitors.exception.VisitorException;
 import arrayvisitors.util.FileDisplayInterface;
 import arrayvisitors.util.FileProcessor;
 import arrayvisitors.util.MyLogger;
+import arrayvisitors.util.MyLogger.DebugLevel;
 import arrayvisitors.util.Results;
 import arrayvisitors.visitors.CommonIntsVisitor;
 import arrayvisitors.visitors.MissingIntsVisitor;
-//import arrayvisitors.util.Results;
 import arrayvisitors.visitors.PopulateMyArrayVisitor;
 import arrayvisitors.visitors.VisitorI;
 
@@ -36,10 +37,19 @@ public class Driver {
 			System.err.println("Error: Incorrect number of arguments. Program accepts 5 arguments.");
 			System.exit(0);
 		}
+
 		String debugLevel = args[4];
 		MyLogger.setDebugValue(Integer.parseInt(debugLevel));
 
-		// sList<Integer> list = new ArrayList<>();
+		MyLogger LOGGER = MyLogger.getMyLoggerInstance();
+
+		if (args[0].equals(args[1])) {
+			LOGGER.writeMessage("Input files cannot be of same name", DebugLevel.EXCEPTION);
+		}
+
+		if (args[2].equals(args[3])) {
+			LOGGER.writeMessage("Output files cannot be of same name", DebugLevel.EXCEPTION);
+		}
 
 		MyArrayI myArray1 = new MyArray();
 		MyArrayI myArray2 = new MyArray();
@@ -49,19 +59,23 @@ public class Driver {
 
 		MyArrayListI myArrayList = new MyArrayList();
 
-		Results results = new Results();
-
 		try {
 
 			VisitorI populateVisitor1 = new PopulateMyArrayVisitor(new FileProcessor(INPUT_FILE_PATH1));
-			myArray1.accept(populateVisitor1);
-
-			// System.out.println("inputFile1 = " + myArray1.toString());
+			try {
+				myArray1.accept(populateVisitor1);
+			} catch (VisitorException e) {
+				e.printStackTrace();
+				LOGGER.writeMessage(e.getMessage(), DebugLevel.EXCEPTION);
+			}
 
 			VisitorI populateVisitor2 = new PopulateMyArrayVisitor(new FileProcessor(INPUT_FILE_PATH2));
-			myArray2.accept(populateVisitor2);
-
-			// System.out.println("inputFile2 = " + myArray2.toString());
+			try {
+				myArray2.accept(populateVisitor2);
+			} catch (VisitorException e) {
+				e.printStackTrace();
+				LOGGER.writeMessage(e.getMessage(), DebugLevel.EXCEPTION);
+			}
 
 		} catch (InvalidPathException | SecurityException | IOException e) {
 			e.printStackTrace();
@@ -70,17 +84,25 @@ public class Driver {
 		myArrayList.add(myArray1);
 		myArrayList.add(myArray2);
 
-		VisitorI commonIntsVisitor = new CommonIntsVisitor(results);
-		myArrayList.accept(commonIntsVisitor);
+		Results results = new Results();
 
-		VisitorI missingIntsVisitor = new MissingIntsVisitor(results);
+		try {
 
-		myArray1.accept(missingIntsVisitor);
-		myArray2.accept(missingIntsVisitor);
+			VisitorI commonIntsVisitor = new CommonIntsVisitor(results);
+			myArrayList.accept(commonIntsVisitor);
+
+			VisitorI missingIntsVisitor = new MissingIntsVisitor(results);
+			myArray1.accept(missingIntsVisitor);
+			myArray2.accept(missingIntsVisitor);
+
+		} catch (VisitorException e) {
+			e.printStackTrace();
+			LOGGER.writeMessage(e.getMessage(), DebugLevel.EXCEPTION);
+		}
 
 		FileDisplayInterface fileout = results;
-		((Results) fileout).printToCommonIntFile(args[2]);
 		try {
+			((Results) fileout).printToCommonIntFile(args[2]);
 			((Results) fileout).printToMissingIntFile(args[3]);
 		} catch (ResultException e) {
 			e.printStackTrace();
